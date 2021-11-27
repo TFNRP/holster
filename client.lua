@@ -15,6 +15,7 @@ Citizen.CreateThread(function()
             if lastDrawable ~= drawable then
               local texture = GetPedTextureVariation(ped, lastComponent)
               SetPedComponentVariation(ped, lastComponent, lastDrawable, texture, 0)
+              SendNuiMessage([[{"t":"PLAY_SOUND","d":{"sound":1}}]])
             end
           elseif Config.Weapons[currentWeapon] then
             for component, holsters in pairs(Config.Peds[hash]) do
@@ -24,6 +25,7 @@ Citizen.CreateThread(function()
                 lastDrawable = drawable
                 lastComponent = component
                 SetPedComponentVariation(ped, component, holsters[drawable], texture, 0)
+                SendNuiMessage([[{"t":"PLAY_SOUND","d":{"sound":0}}]])
                 break
               end
             end
