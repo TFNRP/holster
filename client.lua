@@ -12,10 +12,13 @@ Citizen.CreateThread(function()
         if currentWeapon ~= lastWeapon then
           if Config.Weapons[lastWeapon] and lastComponent then
             local drawable = GetPedDrawableVariation(ped, lastComponent)
-            if lastDrawable ~= drawable then
+            if lastDrawable ~= drawable and Config.Peds[hash][lastComponent][lastDrawable] == drawable then
               local texture = GetPedTextureVariation(ped, lastComponent)
               SetPedComponentVariation(ped, lastComponent, lastDrawable, texture, 0)
               SendNuiMessage([[{"t":"PLAY_SOUND","d":{"sound":1}}]])
+            else
+              lastDrawable = nil
+              lastComponent = nil
             end
           elseif Config.Weapons[currentWeapon] then
             for component, holsters in pairs(Config.Peds[hash]) do
